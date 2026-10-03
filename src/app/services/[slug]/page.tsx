@@ -1,0 +1,7 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { services } from "@/lib/site-data";
+export function generateStaticParams() { return services.map(({ slug }) => ({ slug })); }
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> { const { slug } = await params; const item = services.find((entry) => entry.slug === slug); return item ? { title: item.title, description: item.summary } : {}; }
+export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) { const { slug } = await params; const item = services.find((entry) => entry.slug === slug); if (!item) notFound(); return <main id="main-content"><section className="detail-hero"><div className="container"><p className="eyebrow">Service</p><h1>{item.title}</h1><p className="lead">{item.hero}</p><Link className="button button--gold" href="/contact">이 서비스 문의하기</Link></div></section><section className="section"><div className="container"><div className="feature-grid">{item.points.map((point, index) => <article key={point}><span>0{index + 1}</span><h2>{point}</h2><p>현장 환경과 기존 시스템을 확인하고 데이터가 실제 업무와 의사결정에 활용되도록 설계합니다.</p></article>)}</div></div></section><section className="sub-cta"><div className="container"><p className="eyebrow">Project Consultation</p><h2>현재 시스템과 도입 과제를<br />함께 정리해보세요.</h2><Link className="button button--gold" href="/contact">사업 상담</Link></div></section></main>; }

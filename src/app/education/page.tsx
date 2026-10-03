@@ -1,0 +1,5 @@
+import type { Metadata } from "next";
+import { PageHero } from "@/components/page-hero";
+import { SubmissionForm } from "@/components/submission-form";
+export const metadata: Metadata = { title: "교육·컨설팅", description: "제조 디지털 전환, 품질 데이터와 스마트팩토리 도입 교육 및 컨설팅" };
+export default function EducationPage() { return <main id="main-content"><PageHero eyebrow="Consulting & Training" title="제조 디지털 전환 교육·컨설팅" description="현장 진단부터 데이터와 품질 업무 설계, 시스템 도입과 운영 역량 확보를 지원합니다." /><section className="section"><div className="container metric-grid"><article><strong>01</strong><h2>현황 진단</h2><p>제품, 공정과 품질 업무에서 개선이 필요한 지점과 현재 데이터 흐름을 확인합니다.</p></article><article><strong>02</strong><h2>도입 설계</h2><p>디지털 트윈, DQMS와 IoT·클라우드 중 필요한 기술과 적용 순서를 정리합니다.</p></article><article><strong>03</strong><h2>운영 교육</h2><p>구축한 시스템과 데이터를 현장 담당자가 지속적으로 활용할 수 있도록 지원합니다.</p></article></div></section><section className="section section--soft"><div className="container form-layout"><aside><p className="eyebrow">Apply</p><h2>교육·컨설팅 신청</h2><p>현재 운영 환경과 검토 중인 기술 또는 시스템을 알려주세요.</p></aside><SubmissionForm kind="education" /></div></section></main>; }
