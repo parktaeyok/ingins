@@ -1,44 +1,23 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/section-heading";
-import { services, portfolioItems, blogPosts } from "@/lib/site-data";
+import { services, blogPosts } from "@/lib/site-data";
+import { implementationSteps } from "@/lib/ax-data";
 
 export default function HomePage() {
   return (
     <main id="main-content">
-      <section className="hero hero--home">
-        <div className="container hero__grid">
-          <div>
-            <p className="eyebrow">Digital Twin · Smart Factory · Industrial IoT</p>
-            <h1>데이터로 연결하는<br /><span>제조 디지털 혁신</span></h1>
-            <p className="lead">(주)인지아이앤에스는 디지털 트윈, 스마트팩토리와 품질 데이터 플랫폼을 기반으로 제조 현장의 디지털 전환을 지원합니다.</p>
-            <div className="button-row"><Link className="button button--gold" href="/contact">사업 상담</Link><Link className="button button--ghost" href="/diagnosis">제조 DX 사전진단</Link></div>
-          </div>
-          <div className="hero-art" aria-hidden="true"><div className="hero-art__window"><i /><i /><i /><span /></div><div className="hero-art__card hero-art__card--one">Digital Twin</div><div className="hero-art__card hero-art__card--two">Quality Data</div></div>
-        </div>
-      </section>
-
-      <section className="section section--ink">
-        <div className="container">
-          <SectionHeading eyebrow="Manufacturing DX" title="제품과 공정의 데이터를 하나의 흐름으로 연결합니다" description="개발부터 생산과 품질, 협력사 업무까지 이어지는 정보를 현장에서 활용할 수 있도록 구성합니다." />
-          <div className="problem-grid">
-            <article><b>01</b><h3>분산된 품질 데이터</h3><p>개발, 생산과 고객 품질 정보가 여러 시스템과 문서에 나뉘어 문제 추적이 늦어집니다.</p></article>
-            <article><b>02</b><h3>검증하기 어려운 공정</h3><p>실제 설비를 변경하기 전에 제품과 공정 조건을 비교하고 확인할 환경이 필요합니다.</p></article>
-            <article><b>03</b><h3>연결되지 않은 현장</h3><p>설비와 센서 데이터가 수집되어도 분석, 협업과 의사결정에 충분히 활용되지 못합니다.</p></article>
-          </div>
-        </div>
-      </section>
-
-      <section className="section"><div className="container"><SectionHeading eyebrow="Core Services" title="제조 현장에 필요한 디지털 기반을 구축합니다" description="디지털 트윈, 품질경영 시스템과 IoT·클라우드 플랫폼을 기업 환경에 맞게 연결합니다." /><div className="card-grid">{services.map((service, index) => <Link className="service-card" href={`/services/${service.slug}`} key={service.slug}><span>0{index + 1}</span><h3>{service.title}</h3><p>{service.summary}</p><strong>자세히 보기 →</strong></Link>)}</div></div></section>
-
-      <section className="section section--soft"><div className="container split-feature"><div><p className="eyebrow">DX Readiness Check</p><h2>구축 전에<br />현장과 데이터를 진단합니다.</h2><p>현재 시스템, 품질 업무와 데이터 활용 수준을 확인하고 우선 적용할 영역을 정리합니다.</p><Link className="text-link" href="/diagnosis">제조 DX 사전진단 신청 →</Link></div><div className="score-card"><span>DX CHECK</span><strong>5</strong><small>가지 핵심 영역 검토</small></div></div></section>
-
-      <section className="section"><div className="container"><SectionHeading eyebrow="Business Models" title="사업 모델과 적용 분야" description="제공 자료를 바탕으로 인지아이앤에스가 추진하는 제조혁신 사업 영역을 정리했습니다." /><div className="content-grid">{portfolioItems.map((item) => <Link className="content-card" href={`/portfolio/${item.slug}`} key={item.slug}><div className={`visual visual--${item.tone}`}><span>{item.label}</span></div><div><h3>{item.title}</h3><p>{item.summary}</p><strong>내용 보기 →</strong></div></Link>)}</div><div className="section-action"><Link className="button button--outline" href="/portfolio">사업 분야 전체 보기</Link></div></div></section>
-
-      <section className="section section--navy"><div className="container split-feature"><div><p className="eyebrow">Consulting & Training</p><h2>기술 도입을 위한<br />교육과 컨설팅</h2><p>제조 데이터와 품질 업무를 이해하고 현장에 적용할 수 있도록 진단, 교육과 구축 방향 수립을 지원합니다.</p><Link className="button button--gold" href="/education">교육·컨설팅 확인</Link></div><ol className="step-list"><li><span>01</span>현장과 업무 현황 확인</li><li><span>02</span>데이터와 품질 과제 정리</li><li><span>03</span>적용 기술과 시스템 설계</li><li><span>04</span>구축·운영 단계 지원</li></ol></div></section>
-
-      <section className="section"><div className="container"><SectionHeading eyebrow="Insights" title="제조 디지털 전환의 핵심 기술" /><div className="blog-grid">{blogPosts.slice(0, 3).map((post) => <Link href={`/blog/${post.slug}`} key={post.slug}><span>{post.category}</span><h3>{post.title}</h3><p>{post.summary}</p><strong>글 읽기 →</strong></Link>)}</div></div></section>
-
-      <section className="final-cta"><div className="container"><p className="eyebrow">Start a Project</p><h2>제조 현장의 과제를<br />함께 검토하겠습니다.</h2><p>도입 범위가 정리되지 않아도 현재 시스템과 해결하려는 문제부터 확인할 수 있습니다.</p><Link className="button button--gold" href="/contact">사업 상담 시작</Link></div></section>
+      <section className="hero hero--home"><div className="container hero__grid">
+        <div><p className="eyebrow">Manufacturing AX / INGIN I&amp;S</p><h1>현장의 기록을<br /><span>일하는 AI로.</span></h1><p className="lead">중소 제조기업의 생산·품질·공급망 데이터를 연결합니다. 매일 쓰는 생산 보고서와 품질문서 검색부터, 현장에서 확인할 수 있는 변화로 시작합니다.</p><div className="button-row"><Link className="button button--gold" href="/diagnosis">우리 공장 AX 진단</Link><Link className="button button--ghost" href="/services">서비스 살펴보기 ↗</Link></div><p className="hero-note">엑셀·CSV부터 기존 ERP·MES·QMS까지, 현재 자료에서 시작합니다.</p></div>
+        <div className="ax-console" aria-label="제조 업무 AI 도우미의 업무 흐름 예시"><div className="console-top"><span className="status-dot" /> MANUFACTURING WORKSPACE <small>업무 흐름 예시</small></div><div className="console-heading"><span>생산 · 품질 · 공급망</span><h2>데이터가 판단으로<br />이어지는 흐름</h2></div><div className="console-sources"><span>Excel / CSV</span><span>ERP / MES</span><span>승인 품질문서</span></div><div className="console-line" aria-hidden="true">↓</div><div className="console-task"><span>01 / PMS</span><h3>일일 생산 보고서</h3><p>실적 집계 <b>→</b> 설명 초안 <b>→</b> 담당자 확인</p><small>숫자는 계산으로 · 설명은 AI로</small></div><div className="console-task"><span>02 / QMS</span><h3>품질문서 검색</h3><p>승인 문서 <b>→</b> 근거·버전 <b>→</b> 검토</p><small>권한에 맞는 자료와 근거 확인</small></div><div className="console-footer"><span>HUMAN IN THE LOOP</span><b>최종 판단은 현장 담당자가</b></div></div>
+      </div></section>
+      <div className="domain-strip"><div className="container"><p>제조 업무를 연결하는 세 가지 축</p><span><b>PMS</b> 생산관리</span><span><b>QMS</b> 품질관리</span><span><b>SCM</b> 공급망관리</span></div></div>
+      <section className="section section--soft"><div className="container"><SectionHeading eyebrow="Start with your daily work" title="매일 반복되는 이 업무부터 바꿉니다" description="생산관리자·품질관리자·구매담당자가 이미 기록하고 있는 자료에서 적용할 일을 찾습니다." /><div className="problem-grid"><article><b>01 / 생산</b><h3>보고서에 쓰는 시간</h3><p>여러 엑셀과 시스템에서 실적을 모으고 숫자를 맞추고 보고 문장을 작성하는 반복 업무.</p></article><article><b>02 / 품질</b><h3>찾기 어려운 검사기준</h3><p>어느 문서가 최신인지, 과거에는 어떻게 대응했는지 확인하는 데 걸리는 시간.</p></article><article><b>03 / 공급망</b><h3>늦게 보이는 납기 위험</h3><p>생산 지연과 자재 도착 정보가 나뉘어 긴급 대응이 반복되는 현장.</p></article></div></div></section>
+      <section className="section"><div className="container"><SectionHeading eyebrow="First offering" title="제조 업무 AI 도우미" description="첫 적용은 보고서 자동 작성과 품질문서 검색입니다. 한 공장, 한 업무부터 효과를 확인합니다." /><div className="offering-grid"><article className="offering-card"><span className="badge">01 / PMS · AX</span><h3>일일 생산 보고서<br />자동 작성</h3><p>작업지시와 실적을 연결해 계획 대비 결과를 집계합니다. AI가 설명 초안을 만들고 담당자가 확인합니다.</p><ul><li>계획·실적·불량·중단 사유 집계</li><li>DB 조회와 계산으로 수치 확정</li><li>집계부터 수정까지 작성시간 비교</li></ul><Link className="text-link" href="/portfolio/production-report">적용 흐름 보기 →</Link></article><article className="offering-card offering-card--green"><span className="badge">02 / QMS · AX</span><h3>품질문서 검색과<br />고객 대응서 초안</h3><p>승인된 작업표준과 검사기준을 근거·버전과 함께 찾습니다. 과거 대응 자료로 초안 작성을 지원합니다.</p><ul><li>권한에 맞는 승인 문서 검색</li><li>문서 근거와 버전 표시</li><li>담당자 검토 후 대응서 활용</li></ul><Link className="text-link" href="/portfolio/quality-document-search">적용 흐름 보기 →</Link></article></div></div></section>
+      <section className="section section--navy"><div className="container"><SectionHeading eyebrow="A practical path" title="진단하고, 작게 검증하고, 확장합니다" description="현재 업무와 자료를 확인해 도입 범위를 정합니다." /><div className="journey-grid">{implementationSteps.map((step, index) => <article key={step.title}><span>0{index + 1}</span><small>{step.period}</small><h3>{step.title}</h3><p>{step.description}</p></article>)}</div><p className="section-note">기간은 계획 기준이며 데이터 상태와 연동 범위에 따라 협의합니다. 진단·시범 검증·본 구축은 각각 범위와 비용을 정합니다.</p><Link className="button button--ghost" href="/diagnosis">AX 진단과 도입 절차 →</Link></div></section>
+      <section className="section"><div className="container"><SectionHeading eyebrow="Connected services" title="기존 데이터에서 분석까지" description="시스템이 있으면 연동하고, 없으면 필요한 최소 기능부터 설계합니다." /><div className="card-grid">{services.map((service, index) => <Link className="service-card" href={`/services/${service.slug}`} key={service.slug}><span>0{index + 1}</span><h3>{service.title}</h3><p>{service.summary}</p><strong>서비스 상세 →</strong></Link>)}</div></div></section>
+      <section className="section section--soft"><div className="container split-feature"><div><p className="eyebrow">Designed for the shop floor</p><h2>근거를 보여주고,<br />사람이 결정합니다.</h2><p>생산 수량·원가·재고는 계산으로 처리하고 AI는 설명·검색·초안을 지원합니다. 예측은 실제 이력으로 평가하며 현장 담당자가 최종 판단합니다.</p><Link className="text-link" href="/portfolio">10가지 제조 AX 적용 분야 →</Link></div><div className="trust-list"><article><span>01</span><div><h3>수치와 문서 근거</h3><p>확정 집계와 승인 문서·버전을 확인합니다.</p></div></article><article><span>02</span><div><h3>데이터와 권한</h3><p>기업별 분리와 역할별 접근권한을 설계합니다.</p></div></article><article><span>03</span><div><h3>측정과 현장 교육</h3><p>시간·오류·수정 기록을 비교하고 사용을 지원합니다.</p></div></article></div></div></section>
+      <section className="section"><div className="container"><SectionHeading eyebrow="Field notes" title="제조 AX를 준비하는 방법" /><div className="blog-grid">{blogPosts.slice(0, 3).map((post) => <Link href={`/blog/${post.slug}`} key={post.slug}><span>{post.category}</span><h3>{post.title}</h3><p>{post.summary}</p><strong>글 읽기 →</strong></Link>)}</div></div></section>
+      <section className="final-cta"><div className="container"><p className="eyebrow">Start with one task</p><h2>우리 공장의 반복 업무,<br />하나부터 함께 검토해요.</h2><p>현재 사용 중인 자료와 가장 시간이 많이 드는 업무를 알려주세요. 적용 가능성과 시범 검증 범위를 함께 확인합니다.</p><div className="button-row"><Link className="button button--gold" href="/contact">AX 도입 상담</Link><Link className="button button--ghost" href="/education">실무 교육·컨설팅</Link></div></div></section>
     </main>
   );
 }

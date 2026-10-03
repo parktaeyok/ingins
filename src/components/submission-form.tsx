@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 type Kind = "inquiry" | "diagnosis" | "education";
-const labels = { inquiry: "사업 문의 접수", diagnosis: "진단 신청", education: "교육·컨설팅 신청" };
+const labels = { inquiry: "AX 도입 상담 접수", diagnosis: "진단 신청", education: "교육·컨설팅 신청" };
 
 export function SubmissionForm({ kind }: { kind: Kind }) {
   const router = useRouter();
@@ -27,9 +27,9 @@ export function SubmissionForm({ kind }: { kind: Kind }) {
       <label><span>연락처 {kind === "education" ? "*" : ""}</span><input name="phone" type="tel" maxLength={30} autoComplete="tel" required={kind === "education"} /></label>
     </div>
     {kind === "inquiry" && <label><span>문의 제목 *</span><input name="subject" maxLength={200} required /></label>}
-    {kind === "diagnosis" && <label><span>회사 또는 공장 소개 URL *</span><input name="websiteUrl" type="url" maxLength={500} placeholder="https://example.com" required /></label>}
-    {kind === "education" && <label><span>디지털 전환 단계</span><select name="experienceLevel" defaultValue=""><option value="">선택해주세요</option><option value="none">도입 검토 단계</option><option value="basic">일부 시스템 운영 중</option><option value="experienced">DX·스마트공장 운영 중</option></select></label>}
-    <label><span>{kind === "inquiry" ? "문의 내용" : "요청 내용"}{kind === "inquiry" ? " *" : ""}</span><textarea name="message" rows={7} maxLength={5000} required={kind === "inquiry"} /></label>
+    {kind === "diagnosis" && <label><span>회사 또는 공장 소개 URL (선택)</span><input name="websiteUrl" type="url" maxLength={500} placeholder="https://example.com" /></label>}
+    {kind === "education" && <label><span>AI·시스템 도입 단계</span><select name="experienceLevel" defaultValue=""><option value="">선택해주세요</option><option value="none">도입 검토 단계</option><option value="basic">일부 시스템 운영 중</option><option value="experienced">AI·스마트공장 활용 중</option></select></label>}
+    <label><span>{kind === "inquiry" ? "문의 내용" : "요청 내용"}{kind === "inquiry" ? " *" : ""}</span><textarea name="message" rows={7} maxLength={5000} required={kind === "inquiry"} placeholder={kind === "education" ? "담당 업무, 교육 대상·인원과 배우고 싶은 내용을 알려주세요." : "공장 수, 담당 업무, 사용 시스템(엑셀·ERP·MES 등), 반복되는 문제와 보유 자료를 알려주세요."} /></label>
     <label className="privacy-check"><input type="checkbox" name="privacyAgreed" value="true" required /><span>개인정보 수집 및 이용에 동의합니다. <Link href="/privacy">내용 보기</Link></span></label>
     <div className="form-status" aria-live="polite">{error && <p>{error}</p>}</div>
     <button className="button button--primary" type="submit" disabled={pending}>{pending ? "접수 중입니다…" : labels[kind]}</button>
