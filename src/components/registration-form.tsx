@@ -45,18 +45,18 @@ export function RegistrationForm() {
       const { data: handles, error: checkError } = await client.from("registration_handles").select("username").eq("username", value.username).limit(1);
       if (checkError) throw new Error("회원가입 연결 상태를 확인해주세요.");
       if (handles.length) { setChecked(""); throw new Error("이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요."); }
-      const { error: authError } = await client.auth.signUp({ email: value.email, password: value.password, options: {
-        emailRedirectTo: `${window.location.origin}/account/`,
+      const { data: authData, error: authError } = await client.auth.signUp({ email: value.email, password: value.password, options: {
         data: { registration_version: 1, username: value.username, full_name: value.full_name, display_name: value.full_name, phone: value.phone, postal_code: value.postal_code, address: value.address, address_detail: value.address_detail, company_name: value.company_name, privacy_agreed: true },
       } });
       if (authError) throw new Error("가입을 완료하지 못했습니다. 아이디 중복·이메일·비밀번호를 확인하거나 잠시 후 다시 시도해주세요.");
+      if (!authData.session) throw new Error("이메일 확인 설정이 켜져 있거나 이미 사용 중인 이메일입니다. 운영자에게 문의해주세요.");
       setComplete(true);
     } catch (caught) { setError(caught instanceof Error ? caught.message : "가입 요청을 처리하지 못했습니다."); }
     finally { setPending(false); }
   }
-  if (complete) return <section className="register-card register-complete"><span aria-hidden="true">✓</span><h2>가입 요청을 접수했습니다</h2><p role="status">이메일의 인증 링크를 확인한 뒤 로그인해주세요. 이미 가입한 이메일이라면 기존 계정으로 로그인해주세요.</p><Link className="button button--primary" href="/login/">로그인으로 이동 →</Link></section>;
+  if (complete) return <section className="register-card register-complete"><span aria-hidden="true">✓</span><h2>회원가입이 완료되었습니다</h2><p role="status">이메일 인증 없이 회원 서비스를 이용할 수 있습니다. 다음 로그인부터 가입한 아이디와 비밀번호를 사용해주세요.</p><Link className="button button--primary" href="/account/">내 회원 정보 보기 →</Link><Link href="/login/">아이디로 로그인 →</Link></section>;
   return <form className="register-card register-form" onSubmit={submit}>
-    <h2>회원 정보 입력</h2><p className="register-hint">* 필수 항목입니다. 아이디는 회원 식별에 사용하고, 로그인은 이메일로 진행합니다.</p>
+    <h2>회원 정보 입력</h2><p className="register-hint">* 필수 항목입니다. 아이디와 비밀번호로 로그인하며, 이메일 인증은 필요하지 않습니다.</p>
     {!configured && <p role="status" className="register-message">회원가입 연결을 준비 중입니다.</p>}
     <fieldset disabled={pending}><legend>계정 정보</legend>
       <label htmlFor="join-id">아이디 *</label><div className="register-id-row"><input id="join-id" name="username" autoComplete="username" value={username} onChange={event => { setUsername(event.target.value); usernameRef.current=event.target.value; setChecked(""); setNotice(""); }} minLength={4} maxLength={24} required aria-describedby="join-id-help" /><button type="button" className="button" disabled={checking || !configured} onClick={checkUsername}>{checking ? "확인 중…" : "중복 확인"}</button></div><small id="join-id-help">영문 소문자로 시작, 4~24자 · 영문·숫자·밑줄(_)</small>

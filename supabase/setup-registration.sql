@@ -21,12 +21,14 @@ alter table public.registration_profiles enable row level security;
 revoke all on public.registration_handles,public.registration_profiles from public,anon,authenticated;
 -- Only usernames are public for availability checks; the owner UUID is not exposed.
 grant select(username) on public.registration_handles to anon,authenticated;
+-- Server-only ID login resolves the owner without exposing it to browsers.
+grant select on public.registration_handles to service_role;
 grant select on public.registration_profiles to authenticated;
 create policy registration_username_check on public.registration_handles for select to anon,authenticated using(true);
 create policy registration_own_profile on public.registration_profiles for select to authenticated using(id=(select auth.uid()));
 
 -- A trigger is required to atomically reserve an ID and save registration fields
--- before the unauthenticated user has completed email verification.
+-- in the same transaction as the Auth account creation.
 create function private.capture_registration() returns trigger
 language plpgsql security definer set search_path='' as $$
 declare fields jsonb := new.raw_user_meta_data; login_name text;
