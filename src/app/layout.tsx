@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { MemberSession } from "@/components/member-session";
 import "./globals.css";
 import "./ax.css";
-import "./navigation.css";
-import "./members.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://cursamanworks.kr"),
@@ -15,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="ko"><body><a className="skip-link" href="#main-content">본문 바로가기</a><MemberSession><Header />{children}<Footer /></MemberSession></body></html>;
+  return <html lang="ko"><body><a className="skip-link" href="#main-content">본문 바로가기</a><Header />{children}<Footer /></body></html>;
 }

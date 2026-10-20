@@ -8,7 +8,7 @@ export default function AboutPage() {
   return (
     <main id="main-content">
       <PageHero eyebrow="About Us" title="현장의 반복 업무에서 제조 AX를 시작합니다" description="(주)인지아이앤에스는 생산·품질·공급망 데이터를 연결하고 AI를 현장 업무에 적용하는 서비스를 추진합니다." />
-      <section className="section" id="about-business">
+      <section className="section">
         <div className="container about-grid">
           <div><p className="eyebrow">Our Business</p><h2>기존 자료를 연결해 현장의 업무를 개선합니다.</h2></div>
           <div><p>생산 보고서 작성과 품질문서 검색을 첫 적용 업무로 제안합니다. 기존 ERP·MES·QMS가 있으면 연동을 검토하고, 시스템이 없으면 작업지시·실적·검사·LOT 관리 등 필요한 최소 기능부터 범위를 정합니다.</p><p>부산·울산·경남의 금속가공·기계부품 제조기업을 우선 검토하며 생산·품질 담당자와 함께 도입 과제를 확인합니다. 현장 진단, 시범 검증, 구축과 실무 교육을 단계적으로 진행하는 방향입니다.</p></div>
@@ -22,7 +22,7 @@ export default function AboutPage() {
         </div>
       </section>
       <section className="section">
-        <div className="container about-grid" id="company-info">
+        <div className="container about-grid">
           <div><p className="eyebrow">Company Information</p><h2>사업자 정보</h2></div>
           <div className="company-facts">
             <p><b>법인명</b><span>(주)인지아이앤에스</span></p>
