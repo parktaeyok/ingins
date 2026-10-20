@@ -22,6 +22,12 @@ SUPABASE_SECRET_KEY=sb_secret_REPLACE_ME
 
 운영 Site URL은 실제 도메인으로 설정합니다. 서버 주소와 공개 주소가 다르거나 서버 비밀 키가 없으면 로그인이 차단됩니다. 비밀번호 재설정·전화번호 인증·주소 검색 API·회원 정보 수정은 이번 범위에 포함하지 않습니다. 전화번호·이메일·주소는 입력 정보이며 본인 인증 결과가 아닙니다.
 
+## 회원가입 버튼이 비활성화될 때
+
+버튼은 DB 조회 전 공개 연결 설정이 없거나 유효하지 않으면 비활성화됩니다. Vercel의 `ingins` 프로젝트 → Settings → Environment Variables에서 `NEXT_PUBLIC_SUPABASE_URL`과 `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`가 **Production**에 적용되어 있는지 확인합니다. URL은 이 문서의 프로젝트 주소, 키는 같은 프로젝트의 실제 Publishable key를 사용합니다. 따옴표나 `REPLACE_ME` 예시 문자열을 값에 포함하지 않습니다. 끝의 슬래시와 공백은 코드가 정리합니다.
+
+저장한 다음 Deployments에서 최신 `main` 커밋을 **Redeploy**합니다. `NEXT_PUBLIC_` 값은 빌드 때 브라우저 코드에 들어가므로 저장만 하거나 예전 배포를 Promote하는 것으로는 반영되지 않습니다. 가입 버튼이 활성화된 뒤 중복 확인에서 실패한다면 그때 회원 테이블 생성·권한·실제 키 유효성을 확인합니다.
+
 ## 개인정보와 권한
 
 전화번호·주소를 포함한 등록 정보는 `registration_profiles`에 저장하고 RLS로 본인만 조회합니다. 중복 확인용 `registration_handles`는 아이디 열만 공개하며 소유자 UUID에는 SELECT 권한을 주지 않습니다. 비밀번호는 Supabase Auth가 관리하며 자체 프로필 테이블에 저장하지 않습니다. 가입 중 이메일 인증 전 데이터를 원자적으로 저장하기 위해 Auth의 사용자 메타데이터를 거쳐 트리거로 저장합니다. 메타데이터를 관리자 권한 판단에 사용하지 않습니다.

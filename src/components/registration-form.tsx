@@ -57,7 +57,7 @@ export function RegistrationForm() {
   if (complete) return <section className="register-card register-complete"><span aria-hidden="true">✓</span><h2>회원가입이 완료되었습니다</h2><p role="status">이메일 인증 없이 회원 서비스를 이용할 수 있습니다. 다음 로그인부터 가입한 아이디와 비밀번호를 사용해주세요.</p><Link className="button button--primary" href="/account/">내 회원 정보 보기 →</Link><Link href="/login/">아이디로 로그인 →</Link></section>;
   return <form className="register-card register-form" onSubmit={submit}>
     <h2>회원 정보 입력</h2><p className="register-hint">* 필수 항목입니다. 아이디와 비밀번호로 로그인하며, 이메일 인증은 필요하지 않습니다.</p>
-    {!configured && <p role="status" className="register-message">회원가입 연결을 준비 중입니다.</p>}
+    {!configured && <p id="registration-connection" role="alert" className="register-error">회원가입 서비스에 연결할 수 없어 중복 확인과 가입이 일시 중지되었습니다. 잠시 후 다시 방문하거나 운영자에게 문의해주세요. <a href="mailto:taeyok@naver.com">문의하기</a></p>}
     <fieldset disabled={pending}><legend>계정 정보</legend>
       <label htmlFor="join-id">아이디 *</label><div className="register-id-row"><input id="join-id" name="username" autoComplete="username" value={username} onChange={event => { setUsername(event.target.value); usernameRef.current=event.target.value; setChecked(""); setNotice(""); }} minLength={4} maxLength={24} required aria-describedby="join-id-help" /><button type="button" className="button" disabled={checking || !configured} onClick={checkUsername}>{checking ? "확인 중…" : "중복 확인"}</button></div><small id="join-id-help">영문 소문자로 시작, 4~24자 · 영문·숫자·밑줄(_)</small>
       {notice && <p className="register-message" role="status">{notice}</p>}
@@ -67,6 +67,6 @@ export function RegistrationForm() {
     <fieldset disabled={pending}><legend>연락처와 주소</legend><div className="register-grid"><label>전화번호 *<input name="phone" type="tel" autoComplete="tel" placeholder="010-1234-5678" maxLength={25} required /></label><label>회사명 (선택)<input name="company_name" autoComplete="organization" maxLength={100} /></label></div><label>우편번호 *<input name="postal_code" className="postal-input" inputMode="numeric" autoComplete="postal-code" pattern="[0-9]{5}" maxLength={5} placeholder="우편번호 5자리" required /></label><label>기본 주소 *<input name="address" autoComplete="address-line1" minLength={5} maxLength={200} placeholder="도로명 또는 지번 주소" required /></label><label>상세 주소 (선택)<input name="address_detail" autoComplete="address-line2" maxLength={150} placeholder="동·호수 등 상세 주소" /></label></fieldset>
     <label className="register-consent"><input type="checkbox" name="privacy_agreed" value="yes" required disabled={pending} /><span>회원 가입을 위한 개인정보 수집 및 이용에 동의합니다. * <Link href="/privacy/" target="_blank" rel="noreferrer">처리방침 보기 ↗</Link></span></label>
     {error && <p className="register-error" role="alert">{error}</p>}
-    <button className="button button--primary register-submit" disabled={pending || checking || !configured}>{pending ? "가입 처리 중…" : "회원가입"}</button><p className="register-login">이미 회원이신가요? <Link href="/login/">로그인 →</Link></p>
+    <button className="button button--primary register-submit" aria-describedby={!configured ? "registration-connection" : undefined} disabled={pending || checking || !configured}>{pending ? "가입 처리 중…" : !configured ? "회원가입 연결 확인 필요" : "회원가입"}</button><p className="register-login">이미 회원이신가요? <Link href="/login/">로그인 →</Link></p>
   </form>;
 }

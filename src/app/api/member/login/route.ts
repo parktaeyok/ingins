@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import { createSupabaseAdmin } from "@/lib/supabase/server";
 import { usernameSchema } from "@/lib/registration";
 import { createLoginLimiter, loginByUsername } from "@/lib/username-login";
-import { MEMBER_PROJECT_URL } from "@/lib/member-project";
+import { MEMBER_PROJECT_URL, normalizeMemberUrl } from "@/lib/member-project";
 
 export const runtime = "nodejs";
 const allowAttempt = createLoginLimiter();
@@ -20,9 +20,9 @@ export async function POST(request: Request) {
     const username = usernameSchema.safeParse(body?.username);
     if (!username.success || typeof body?.password !== "string" || !body.password.length || body.password.length > 128) return invalid();
     if (!allowAttempt(username.data)) return NextResponse.json({ error: "로그인 시도가 많습니다. 1분 후 다시 시도해주세요." }, { status: 429, headers: { ...headers, "Retry-After": "60" } });
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-    if (url !== MEMBER_PROJECT_URL || !key || !process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_URL !== url) throw new Error("configuration");
+    const url = normalizeMemberUrl(process.env.NEXT_PUBLIC_SUPABASE_URL);
+    const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim();
+    if (url !== MEMBER_PROJECT_URL || !key || !process.env.SUPABASE_SECRET_KEY || normalizeMemberUrl(process.env.SUPABASE_URL) !== url) throw new Error("configuration");
     const admin = createSupabaseAdmin();
     const auth = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } });
     const session = await loginByUsername(username.data, body.password, {
