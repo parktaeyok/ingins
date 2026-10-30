@@ -1,4 +1,5 @@
--- Run only after setup-board.sql and setup-registration.sql, in SQL Editor.
+-- Historical test for the public-body board BEFORE setup-board-password.sql.
+-- For the current protected board use board-password-rls.sql instead.
 -- Synthetic users have no passwords or login identities; ALL changes roll back.
 begin;
 create temporary table board_test_users(label text,id uuid,username text);
