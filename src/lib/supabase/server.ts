@@ -1,9 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
-import { normalizeMemberUrl } from "@/lib/member-project";
+import { supabaseServerConfig } from "@/lib/supabase-server-config";
 
 export function createSupabaseAdmin() {
-  const url = normalizeMemberUrl(process.env.SUPABASE_URL);
-  const secretKey = process.env.SUPABASE_SECRET_KEY?.trim();
-  if (!url || !secretKey) throw new Error("Supabase server environment is not configured.");
-  return createClient(url, secretKey, { auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false } });
+  const {url,key}=supabaseServerConfig({url:process.env.SUPABASE_URL,publicUrl:process.env.NEXT_PUBLIC_SUPABASE_URL,key:process.env.SUPABASE_SECRET_KEY});
+  return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false } });
 }
