@@ -10,7 +10,14 @@
 
 ## Supabase 설정
 
-기존 회원가입과 같은 프로젝트 `ejwutsrpugxuexdquchu`를 사용합니다. 작성자는 등록 프로필이 있는 로그인 회원이어야 합니다. 비밀번호 검증과 본문 전달은 `/api/board/` 서버에서 처리하므로 Vercel 서버 환경변수 `SUPABASE_URL`과 `SUPABASE_SECRET_KEY`가 필요합니다. 기존 아이디 로그인과 같은 서버 키이며 브라우저용 환경변수에 넣지 않습니다.
+기존 회원가입과 같은 프로젝트 `ejwutsrpugxuexdquchu`를 사용합니다. 작성자는 등록 프로필이 있는 로그인 회원이어야 합니다. 비밀번호 검증과 본문 전달은 `/api/board/` 서버에서 처리하므로 Vercel Production 환경변수 `SUPABASE_SECRET_KEY`가 필요합니다. `SUPABASE_URL`이 비어 있으면 `NEXT_PUBLIC_SUPABASE_URL`을 사용합니다. 기존 아이디 로그인과 같은 서버 키이며 브라우저용 환경변수에 넣지 않습니다.
+
+### 연결 오류 코드
+
+- `BOARD_SECRET_MISSING`: 현재 배포의 서버에서 `SUPABASE_SECRET_KEY`를 찾지 못했습니다. Vercel **ingins → Settings → Environment Variables**에서 이름을 정확히 입력하고 **Production**을 선택해 저장한 뒤 새로 배포합니다. 다른 이름이나 Preview에만 등록한 값은 사용할 수 없습니다. 비밀번호 불일치 오류와는 다릅니다.
+- `BOARD_URL_MISMATCH`: 서버 주소가 다른 프로젝트를 가리킵니다. 이 프로젝트 주소로 수정합니다.
+- `BOARD_SECRET_FORMAT`: 공개 키나 예시 값이 서버 키에 들어 있습니다. 같은 프로젝트의 Secret key 또는 service_role 키를 서버에만 설정합니다.
+- `BOARD_LOAD_*`, `BOARD_SET_PASSWORD_*`, `BOARD_LIMITER_*`: 해당 단계의 DB 오류 코드입니다. 서버 로그에는 단계와 코드만 남기고 키·본문·비밀번호는 남기지 않습니다.
 
 1. SQL Editor에서 `select to_regclass('public.site_board_posts');`로 확인합니다.
 2. 신규 설치라면 `supabase/setup-board.sql` 적용 후 `supabase/setup-board-password.sql`을 순서대로 최초 1회 적용합니다. 현재 프로젝트에는 두 SQL을 모두 적용했으므로 다시 실행하지 않습니다.
